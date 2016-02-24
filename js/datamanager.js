@@ -353,12 +353,21 @@ function DataManager(easyPub) {
             if (typeof fieldName != 'undefined') {
 
             if (fieldName == "Author Type" || fieldName == "Author Type 2") {
-                if (arrData[rowIndex][colIndex] == "Person" ||  arrData[rowIndex][colIndex] == "person" || arrData[rowIndex][colIndex] == "PERSON") {
+
+                arrData[rowIndex][colIndex] = arrData[rowIndex][colIndex].toLowerCase();
+
+                if (arrData[rowIndex][colIndex] == "person" || arrData[rowIndex][colIndex] == "http://schema.org/person") {
+
                     arrData[rowIndex][colIndex] = "http://schema.org/Person";
+
                 } 
-                if (arrData[rowIndex][colIndex] == "Organization" ||  arrData[rowIndex][colIndex] == "organization" || arrData[rowIndex][colIndex] == "ORGANIZATION") {
+
+                if (arrData[rowIndex][colIndex] == "organization" || arrData[rowIndex][colIndex] == "http://schema.org/organization") {
+
                     arrData[rowIndex][colIndex] = "http://schema.org/Organization";
+                    
                 }
+
             }
             if (fieldName == 'Access Rights URL') {
 
