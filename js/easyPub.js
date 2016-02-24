@@ -320,58 +320,17 @@ function EasyPublish() {
 	this.getAuthors = function() {
 		var authors = [];
 
-		//If user uploads author type, convert to full id - can now upload type or full id
-		var authorConverted = this.getValue("author_type");
-
-		// Flag for whether or not an author has been converted, if it hasn't, it sends the default option, Person over to the form.
-		var converted = false;
-
-		// Dictionaries for what other options to look for in Author
-		var orgDictionary = ["Organization" ,"organization" ,"ORGANIZATION"];
-		var personDictionary = ["Person", "person","PERSON"];
-
-		for (j=0; j <= personDictionary.length; j++){
-
-			if (authorConverted == orgDictionary[j])  {
-					authorConverted = "http://schema.org/Organization";
-					converted = true;
-			}
-			else if (authorConverted == personDictionary[j]) {
-				authorConverted = "http://schema.org/Person";
-				converted = true;
-			} else if (converted == false){
-				authorConverted = "http://schema.org/Person"; //Sends over Person which is the default option instead of null value.
-			}
-		}
-
 		var author0 = {
-            "@type": authorConverted,
+            "@type": this.getValue("author_type"),
 		    name: this.getValue("author_name"),
             url:  this.getValue("author_url"),
             email:  this.getValue("author_email")
 		}
 		authors[0] = author0;
-
-		if(authorCount>1) {
+	if(authorCount>1) {
 			for(var i=2; i<=authorCount; i++) {
-
-			converted = false;
-			var authorConvertedSecond = this.getValue("author_type_"+i);
-
-			for (j=0; j <= personDictionary.length; j++){
-				if (authorConvertedSecond == orgDictionary[j])  {
-					authorConvertedSecond = "http://schema.org/Organization";
-					converted = true;
-				}
-				else if (authorConvertedSecond == personDictionary[j]) {
-					authorConvertedSecond = "http://schema.org/Person";
-					converted = true;
-				} else if (converted == false) {
-					aauthorConvertedSecond = "http://schema.org/Person"; //Sends over Person which is the default option instead of null value.
-				}
-			}
 				var author = {
-                    "@type": authorConvertedSecond,
+                    "@type": this.getValue("author_type_"+i),
 				    name: this.getValue("author_name_"+i),
 		            url:  this.getValue("author_url_"+i),
 		            email:  this.getValue("author_email_"+i)
@@ -379,6 +338,7 @@ function EasyPublish() {
 				authors[i-1] = author;
 			}
 		}
+		authors[i-1] = author;
 		return authors;
 	}
 
